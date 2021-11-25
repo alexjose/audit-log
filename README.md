@@ -1,3 +1,10 @@
+<p align="center">
+    <a href="https://github.com/alexjose/audit-log/actions"><img src="https://github.com/alexjose/audit-log/workflows/tests/badge.svg" alt="Build Status"></a>
+    <a href="https://packagist.org/packages/alexjose/audit-log"><img src="https://img.shields.io/packagist/dt/alexjose/audit-log" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/alexjose/audit-log"><img src="https://img.shields.io/packagist/v/alexjose/audit-log" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/alexjose/audit-log"><img src="https://img.shields.io/packagist/l/alexjose/audit-log" alt="License"></a>
+</p>
+
 # AuditLog - Log audit events using the Monolog
 
 This library aims to log the critical changes happening in the application. This tracks the changes and the source of the events.

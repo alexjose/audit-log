@@ -22,5 +22,7 @@ final class AuditLogTest extends TestCase
             null,
             1
         );
+
+        $this->assertFileExists('test.log');
     }
 }

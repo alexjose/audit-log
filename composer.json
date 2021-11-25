@@ -1,5 +1,5 @@
 {
-    "name": "alex/audit-log",
+    "name": "alexjose/audit-log",
     "description": "Log audits events",
     "type": "library",
     "license": "MIT",

@@ -5,7 +5,6 @@ namespace AuditLog;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
-use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 
 class AuditLog
@@ -21,10 +20,6 @@ class AuditLog
     public function __construct($logFile)
     {
         $streamHandler = new StreamHandler($logFile, Logger::INFO);
-
-        $jsonFormatter = new \Monolog\Formatter\JsonFormatter();
-
-        // $streamHandler->setFormatter($jsonFormatter);
 
         $webProcessor = new WebProcessor(null, [
             'url' => 'REQUEST_URI',
@@ -52,9 +47,6 @@ class AuditLog
      * @param array|null $oldValues The old values of the entity
      * @param string $userId The id of the user who made the change
      * @param string $userType The type of the user who made the change
-     * @param string $url The url of the page where the change was made
-     * @param string $ip The ip address of the user who made the change
-     * @param string $userAgent The user agent of the user who made the change
      */
     public function log(
         $title,
@@ -65,22 +57,16 @@ class AuditLog
         $oldValues,
         $userId,
         $userType = 'user'
-        // $url = null,
-        // $ip = null,
-        // $userAgent = null
     ): void {
         $log = [
             'title' => $title,
             'event' => $event,
-            'entityId' => $entityId,
-            'entityType' => $entityType,
-            'newValues' => $newValues,
-            'oldValues' => $oldValues,
-            'userId' => $userId,
-            'userType' => $userType,
-            // 'url' => $url ?? @$_SERVER['REQUEST_URI'],
-            // 'ip' => $ip ?? @$_SERVER['REMOTE_ADDR'],
-            // 'userAgent' => $userAgent ?? @$_SERVER['HTTP_USER_AGENT'],
+            'entity_id' => $entityId,
+            'entity_type' => $entityType,
+            'new_values' => $newValues,
+            'old_values' => $oldValues,
+            'user_id' => $userId,
+            'user_type' => $userType,
         ];
         self::$logger->info($title, $log);
     }

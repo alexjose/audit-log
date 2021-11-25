@@ -1,0 +1,52 @@
+name: tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  tests:
+
+    runs-on: ubuntu-18.04
+    
+    strategy:
+      fail-fast: true
+      matrix:
+        php: ['7.2', '7.3', '7.4', '8.0']
+        
+    name: PHP ${{ matrix.php }}
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ matrix.php }}
+        tools: composer:v2
+        coverage: none
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      uses: nick-invision/retry@v1
+      with:
+        timeout_minutes: 5
+        max_attempts: 5
+        command: composer update --prefer-dist --no-interaction --no-progress
+      
+    - name: Execute tests
+      run: vendor/bin/phpunit tests --verbose

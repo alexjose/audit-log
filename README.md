@@ -9,12 +9,19 @@
 
 This library aims to log the critical changes happening in the application. This tracks the changes and the source of the events.
 
+## Installation
+
+```bash
+composer require alexjose/audit-log
+```
+
 ## Basic Usage
 
 ```php
-$auditLog = new AuditLog('audit.log');
-$auditLog->log(
+$auditLog = new AuditLog();
+$auditLog->log([
     'New User Registerd',
+    'User',
     'creation',
     1,
     'user',
@@ -24,14 +31,25 @@ $auditLog->log(
     ],
     null,
     1
-);
+]);
 ```
 
 ### Signature of `log()`
 
+`log()` will accept an instance of `Event` or an array with the attributes of the `Event`.
+
 ```php
     /**
-     * @param string $title The title of the log
+     * @param Event|array $event
+     */
+    public function log($event): void
+```
+
+Signature of `new Event()`
+
+```php
+    /**
+     * @param string $message The title of the log
      * @param string $event The unique name of event
      * @param string $entityType The type to entity which got modified
      * @param string $entityId The id of the entity which got modified
@@ -40,8 +58,9 @@ $auditLog->log(
      * @param string $userId The id of the user who made the change
      * @param string $userType The type of the user who made the change
      */
-    public function log(
-        $title,
+    public function construct(
+        $message,
+        $module,
         $event,
         $entityId,
         $entityType,
@@ -49,5 +68,5 @@ $auditLog->log(
         $oldValues,
         $userId,
         $userType = 'user'
-    ): void
+    ):void
 ```

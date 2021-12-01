@@ -3,15 +3,58 @@
 declare(strict_types=1);
 
 use AuditLog\AuditLog;
+use AuditLog\Event;
 use PHPUnit\Framework\TestCase;
 
 final class AuditLogTest extends TestCase
 {
-    function testLog()
+    function testLogBasic()
     {
         $auditLog = new AuditLog('test.log');
-        $auditLog->log(
+        $auditLog->log([
             'New User Registerd',
+            'User',
+            'creation',
+            1,
+            'user',
+            [
+                'username' => 'john',
+                'email' => 'john@example.com',
+            ],
+            null,
+            1
+        ]);
+
+        $this->assertFileExists('test.log');
+    }
+
+    function testLogCustomLogFile()
+    {
+        $auditLog = new AuditLog('test1.log');
+        $auditLog->log([
+            'New User Registerd',
+            'User',
+            'creation',
+            1,
+            'user',
+            [
+                'username' => 'john',
+                'email' => 'john@example.com',
+            ],
+            null,
+            1
+        ]);
+
+        $this->assertFileExists('test1.log');
+    }
+
+    function testLogEvent()
+    {
+        $auditLog = new AuditLog('test-event.log');
+
+        $event = new Event(
+            'New User Registerd',
+            'User',
             'creation',
             1,
             'user',
@@ -23,6 +66,8 @@ final class AuditLogTest extends TestCase
             1
         );
 
-        $this->assertFileExists('test.log');
+        $auditLog->log($event);
+
+        $this->assertFileExists('test-event.log');
     }
 }

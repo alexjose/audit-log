@@ -2,10 +2,12 @@
 
 namespace AuditLog;
 
+use Monolog\Formatter\JsonFormatter;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\WebProcessor;
+use Psr\Log\LoggerInterface;
 
 class AuditLog
 {
@@ -15,11 +17,60 @@ class AuditLog
     private static $logger;
 
     /**
-     * @param string $logFile The path to the log file
+     * @param LoggerInterface|string|null $logger Logger object or the path to the log file
      */
-    public function __construct($logFile)
+    public function __construct($logger)
+    {
+        if ($logger instanceof LoggerInterface) {
+            $this->setLogger($logger);
+        } else {
+            $logger = $this->createLogger($logger);
+        }
+
+        $this->setLogger($logger);
+    }
+
+
+    /**
+     * @param Event|array $event
+     */
+    public function log($event): void
+    {
+
+        if (!$event instanceof Event) {
+            $event = new Event(...$event);
+        }
+
+        // $log = [
+        //     'message' => $message,
+        //     'event' => $event,
+        //     'entity_id' => $entityId,
+        //     'entity_type' => $entityType,
+        //     'new_values' => $newValues,
+        //     'old_values' => $oldValues,
+        //     'user_id' => $userId,
+        //     'user_type' => $userType,
+        // ];
+        self::$logger->info($event->message, $event->toArray());
+    }
+
+    public function getLogger(): LoggerInterface
+    {
+        return self::$logger;
+    }
+
+    public function setLogger(LoggerInterface $logger): void
+    {
+        self::$logger = $logger;
+    }
+
+    private function createLogger(string $logFile = 'audit.log'): LoggerInterface
     {
         $streamHandler = new StreamHandler($logFile, Logger::INFO);
+
+        $jsonFormatter = new JsonFormatter();
+
+        $streamHandler->setFormatter($jsonFormatter);
 
         $webProcessor = new WebProcessor(null, [
             'url' => 'REQUEST_URI',
@@ -32,42 +83,11 @@ class AuditLog
 
         $interspectionProcessor = new IntrospectionProcessor(Logger::INFO, [], 1);
 
-        self::$logger = new \Monolog\Logger('audit_log');
-        self::$logger->pushHandler($streamHandler);
-        self::$logger->pushProcessor($webProcessor);
-        self::$logger->pushProcessor($interspectionProcessor);
-    }
+        $logger = new Logger('audit_log');
+        $logger->pushHandler($streamHandler);
+        $logger->pushProcessor($webProcessor);
+        $logger->pushProcessor($interspectionProcessor);
 
-    /**
-     * @param string $title The title of the log
-     * @param string $event The unique name of event
-     * @param string $entityType The type to entity which got modified
-     * @param string $entityId The id of the entity which got modified
-     * @param array $newValues The new values of the entity
-     * @param array|null $oldValues The old values of the entity
-     * @param string $userId The id of the user who made the change
-     * @param string $userType The type of the user who made the change
-     */
-    public function log(
-        $title,
-        $event,
-        $entityId,
-        $entityType,
-        $newValues,
-        $oldValues,
-        $userId,
-        $userType = 'user'
-    ): void {
-        $log = [
-            'title' => $title,
-            'event' => $event,
-            'entity_id' => $entityId,
-            'entity_type' => $entityType,
-            'new_values' => $newValues,
-            'old_values' => $oldValues,
-            'user_id' => $userId,
-            'user_type' => $userType,
-        ];
-        self::$logger->info($title, $log);
+        return $logger;
     }
 }

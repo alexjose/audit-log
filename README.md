@@ -25,12 +25,15 @@ $auditLog->log([
     'creation',
     1,
     'user',
+    'alex@example.com',
     [
         'username' => 'john',
         'email' => 'john@example.com'
     ],
     null,
-    1
+    1,
+    'user',
+    'alex@example.com',
 ]);
 ```
 
@@ -51,22 +54,26 @@ Signature of `new Event()`
     /**
      * @param string $message The title of the log
      * @param string $event The unique name of event
-     * @param string $entityType The type to entity which got modified
      * @param string $entityId The id of the entity which got modified
+     * @param string $entityType The type to entity which got modified
+     * @param string $entityTitle The title of the entity which got modified
      * @param array $newValues The new values of the entity
      * @param array|null $oldValues The old values of the entity
      * @param string $userId The id of the user who made the change
      * @param string $userType The type of the user who made the change
+     * @param string $userName The username of the user who made the change
      */
-    public function construct(
+    public function __construct(
         $message,
         $module,
         $event,
         $entityId,
         $entityType,
+        $entityTitle,
         $newValues,
         $oldValues,
         $userId,
-        $userType = 'user'
+        $userType,
+        $userName
     ):void
 ```

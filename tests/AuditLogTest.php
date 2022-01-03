@@ -17,12 +17,15 @@ final class AuditLogTest extends TestCase
             'creation',
             1,
             'user',
+            'alex@example.com',
             [
                 'username' => 'john',
                 'email' => 'john@example.com',
             ],
             null,
-            1
+            1,
+            'user',
+            'alex@example.com'
         ]);
 
         $this->assertFileExists('test.log');
@@ -37,12 +40,15 @@ final class AuditLogTest extends TestCase
             'creation',
             1,
             'user',
+            'alex@example.com',
             [
                 'username' => 'john',
                 'email' => 'john@example.com',
             ],
             null,
-            1
+            1,
+            'user',
+            'alex@example.com',
         ]);
 
         $this->assertFileExists('test1.log');
@@ -58,12 +64,15 @@ final class AuditLogTest extends TestCase
             'creation',
             1,
             'user',
+            'alex@example.com',
             [
                 'username' => 'john',
                 'email' => 'john@example.com',
             ],
             null,
-            1
+            1,
+            'user',
+            'alex@example.com',
         );
 
         $auditLog->log($event);

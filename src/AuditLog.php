@@ -41,16 +41,6 @@ class AuditLog
             $event = new Event(...$event);
         }
 
-        // $log = [
-        //     'message' => $message,
-        //     'event' => $event,
-        //     'entity_id' => $entityId,
-        //     'entity_type' => $entityType,
-        //     'new_values' => $newValues,
-        //     'old_values' => $oldValues,
-        //     'user_id' => $userId,
-        //     'user_type' => $userType,
-        // ];
         self::$logger->info($event->message, $event->toArray());
     }
 

@@ -16,6 +16,7 @@ final class EventTest extends TestCase
             'updation',
             1,
             'course',
+            'Course 1',
             [
                 'name' => 'Laravel 8',
                 'description' => 'Laravel 8 is a web application framework with expressive, elegant syntax.',
@@ -26,7 +27,9 @@ final class EventTest extends TestCase
                 'description' => 'Laravel is a web application framework with expressive, elegant syntax.',
                 'category' => 'PHP',
             ],
-            1
+            1,
+            'user',
+            'alex@example.com'
         );
         $this->assertEquals([
             'name' => 'Laravel 8',
@@ -42,6 +45,7 @@ final class EventTest extends TestCase
             'updation',
             1,
             'course',
+            'Course 1',
             [
                 'name' => 'Laravel 8',
                 'description' => 'Laravel 8 is a web application framework with expressive, elegant syntax.',
@@ -52,7 +56,9 @@ final class EventTest extends TestCase
                 'description' => 'Laravel is a web application framework with expressive, elegant syntax.',
                 'category' => 'PHP',
             ],
-            1
+            1,
+            'user',
+            'alex@example.com'
         );
 
         $this->assertEquals([

@@ -30,6 +30,11 @@ class Event
     private $entityId;
 
     /**
+     * @var string
+     */
+    private $entityTitle;
+
+    /**
      * @var array
      */
     private $newValues;
@@ -54,17 +59,24 @@ class Event
      */
     private $userType;
 
+    /**
+     * @var string
+     */
+    private $userName;
+
 
 
     /**
      * @param string $message The title of the log
      * @param string $event The unique name of event
-     * @param string $entityType The type to entity which got modified
      * @param string $entityId The id of the entity which got modified
+     * @param string $entityType The type to entity which got modified
+     * @param string $entityTitle The title of the entity which got modified
      * @param array $newValues The new values of the entity
      * @param array|null $oldValues The old values of the entity
      * @param string $userId The id of the user who made the change
      * @param string $userType The type of the user who made the change
+     * @param string $userName The username of the user who made the change
      */
     public function __construct(
         $message,
@@ -72,20 +84,24 @@ class Event
         $event,
         $entityId,
         $entityType,
+        $entityTitle,
         $newValues,
         $oldValues,
         $userId,
-        $userType = 'user'
+        $userType,
+        $userName
     ) {
         $this->message = $message;
         $this->module = $module;
         $this->event = $event;
         $this->entityId = $entityId;
         $this->entityType = $entityType;
+        $this->entityTitle = $entityTitle;
         $this->newValues = $newValues;
         $this->oldValues = $oldValues;
         $this->userId = $userId;
         $this->userType = $userType;
+        $this->userName =$userName;
 
         $this->diffValues = $this->getDiff();
     }

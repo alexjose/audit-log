@@ -67,8 +67,10 @@ final class EventTest extends TestCase
             'event' => 'updation',
             'user_id' => 1,
             'user_type' => 'user',
+            'username' => 'alex@example.com',
             'entity_id' => 1,
             'entity_type' => 'course',
+            'entity_title' => 'Course 1',
             'old_values' => [
                 'name' => 'Laravel',
                 'description' => 'Laravel is a web application framework with expressive, elegant syntax.',

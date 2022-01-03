@@ -61,7 +61,7 @@ Signature of `new Event()`
      * @param array|null $oldValues The old values of the entity
      * @param string $userId The id of the user who made the change
      * @param string $userType The type of the user who made the change
-     * @param string $userName The username of the user who made the change
+     * @param string $username The username of the user who made the change
      */
     public function __construct(
         $message,
@@ -74,6 +74,6 @@ Signature of `new Event()`
         $oldValues,
         $userId,
         $userType,
-        $userName
+        $username
     ):void
 ```

@@ -62,7 +62,7 @@ class Event
     /**
      * @var string
      */
-    private $userName;
+    private $username;
 
 
 
@@ -76,7 +76,7 @@ class Event
      * @param array|null $oldValues The old values of the entity
      * @param string $userId The id of the user who made the change
      * @param string $userType The type of the user who made the change
-     * @param string $userName The username of the user who made the change
+     * @param string $username The username of the user who made the change
      */
     public function __construct(
         $message,
@@ -89,7 +89,7 @@ class Event
         $oldValues,
         $userId,
         $userType,
-        $userName
+        $username
     ) {
         $this->message = $message;
         $this->module = $module;
@@ -101,7 +101,7 @@ class Event
         $this->oldValues = $oldValues;
         $this->userId = $userId;
         $this->userType = $userType;
-        $this->userName =$userName;
+        $this->username =$username;
 
         $this->diffValues = $this->getDiff();
     }
@@ -119,8 +119,10 @@ class Event
             'event' => $this->event,
             'entity_id' => $this->entityId,
             'entity_type' => $this->entityType,
+            'entity_title' => $this->entityTitle,
             'user_id' => $this->userId,
             'user_type' => $this->userType,
+            'username' => $this->username,
             'new_values' => $this->newValues,
             'old_values' => $this->oldValues,
             'diff_values' => $this->diffValues,

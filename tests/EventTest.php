@@ -29,7 +29,7 @@ final class EventTest extends TestCase
             ],
             1,
             'user',
-            'alex@example.com',
+            'alex@example.com'
         );
         $this->assertEquals([
             'name' => 'Laravel 8',
@@ -58,7 +58,7 @@ final class EventTest extends TestCase
             ],
             1,
             'user',
-            'alex@example.com',
+            'alex@example.com'
         );
 
         $this->assertEquals([

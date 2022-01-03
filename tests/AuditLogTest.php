@@ -72,7 +72,7 @@ final class AuditLogTest extends TestCase
             null,
             1,
             'user',
-            'alex@example.com',
+            'alex@example.com'
         );
 
         $auditLog->log($event);

@@ -101,7 +101,7 @@ class Event
         $this->oldValues = $oldValues;
         $this->userId = $userId;
         $this->userType = $userType;
-        $this->username =$username;
+        $this->username = $username;
 
         $this->diffValues = $this->getDiff();
     }

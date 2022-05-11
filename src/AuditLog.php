@@ -44,7 +44,12 @@ class AuditLog
         try {
             self::$logger->info($event->message, $event->toArray());
         } catch (\Exception $e){
-            trigger_error($e->getMessage(), E_USER_NOTICE);
+            $previousError = $e->getPrevious();
+            if ($previousError) {
+                trigger_error($previousError, E_USER_NOTICE);
+            } else {
+                trigger_error($e->getMessage(), E_USER_NOTICE);
+            }
         }
     }
 

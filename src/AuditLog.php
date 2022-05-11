@@ -41,7 +41,11 @@ class AuditLog
             $event = new Event(...$event);
         }
 
-        self::$logger->info($event->message, $event->toArray());
+        try {
+            self::$logger->info($event->message, $event->toArray());
+        } catch (\Exception $e){
+            trigger_error($e->getMessage(), E_USER_NOTICE);
+        }
     }
 
     public function getLogger(): LoggerInterface

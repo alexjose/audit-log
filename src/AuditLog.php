@@ -46,7 +46,7 @@ class AuditLog
         } catch (\Exception $e){
             $previousError = $e->getPrevious();
             if ($previousError) {
-                trigger_error($previousError, E_USER_NOTICE);
+                trigger_error($previousError->getMessage(), E_USER_NOTICE);
             } else {
                 trigger_error($e->getMessage(), E_USER_NOTICE);
             }
